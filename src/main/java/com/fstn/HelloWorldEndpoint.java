@@ -6,13 +6,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 @Component
 @Path("/hello")
 public class HelloWorldEndpoint {
 
-    @GET
+    @POST
     @Path("/login")
     public String login() {
         SecurityContextHolder.getContext()

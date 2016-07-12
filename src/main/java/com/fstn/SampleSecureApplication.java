@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 import javax.inject.Named;
 import javax.ws.rs.ApplicationPath;
@@ -38,9 +39,10 @@ public class SampleSecureApplication
     {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
+            SimpleCORSFilter corsFilter = new SimpleCORSFilter();
             http
-                .httpBasic()
-                .and()
+                .csrf().disable()
+                .addFilterBefore(corsFilter,ChannelProcessingFilter.class)
                 .authorizeRequests()
                 .antMatchers("/rest/hello/login").permitAll()
                 .anyRequest().authenticated();
